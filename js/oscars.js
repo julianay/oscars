@@ -91,6 +91,26 @@ d3.csv("data/oscars.csv", function(error, data) {
       .attr("cx", xMap)
       .attr("cy", yMap)
       .style("fill", function(d) { return color(cValue(d));}) 
+      
+      //hover dots (click on ipad)
+      .on("mouseover", function(d, i) {
+        tooltip.transition()
+               .duration(200)
+               .style("opacity", .9);
+          tooltip.html("<div>" + d.name + "<br/>" + (new Date(d.award_d)).getFullYear() + ", age:" + yValue(d) + "<br/>" + d.film + "<div>" )
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+          dimDots(i);   
+      })
+      .on("mouseout", function(d, i){
+        tooltip.transition()
+               .duration(500)
+               .style("opacity", 0);
+               lightDots(i); 
+      });
+
+      /*
+      //for ipad: 
       .on("click", function(d, i) {
         if(dotClicked==false){
           console.log("test " + dotClicked)
@@ -111,20 +131,7 @@ d3.csv("data/oscars.csv", function(error, data) {
                dotClicked = false;
         }
       });
-      /*
-      .on("click", function(d, i) {
-        if(dotClicked==true){
-            tooltip.transition()
-               .duration(500)
-               .style("opacity", 0);
-               lightDots(i); 
-               console.log("test " + dotClicked)
-               dotClicked = false;
-        }      
-      });
-*/
-
-
+      */
 
   // draw legend
   var legend = svg.selectAll(".legend")
