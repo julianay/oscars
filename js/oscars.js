@@ -1,9 +1,11 @@
 console.log("hello js");
 var dotClicked = false;
+var screenWidth = 960
+var screenHeight = 500
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = screenWidth - margin.left - margin.right,
+    height = screenHeight - margin.top - margin.bottom;
 
 /* 
  * value accessor - returns the value to encode for a given data object.
@@ -138,12 +140,14 @@ d3.csv("data/oscars.csv", function(error, data) {
       .data(color.domain())
     .enter().append("g")
       .attr("class", "legend")
+      //.attr("x", 10)
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; })
+
       .on("mouseover", function(d, i) {
         svg.selectAll("circle").style("opacity", 0.1);
         //svg.selectAll("#best_actor").style("opacity", 1);
         svg.selectAll("#" + d).style("opacity", 1);
-        svg.selectAll("#" + d).transition().attr("cy",0);
+        //svg.selectAll("#" + d).transition().attr("cy",0);
       })
       .on("mouseout", function(d, i) {
         //console.log(d);

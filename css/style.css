@@ -1,17 +1,21 @@
 body {
-  font: 11px sans-serif;
-  background-color: #fff;
+  font: 11px; font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  color: #fff; 
+  background-color: #eee;
 }
 
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #666;
   shape-rendering: auto;
+  color: #000; 
+
 }
 
 .dot {
-  stroke: #000;
+  stroke: #666;
+   color: #000; 
 }
 
 .tooltip {
@@ -19,8 +23,11 @@ body {
   width: 200px;
   height: 28px;
   pointer-events: none;
+  color: #000;
 }
 
 div{
-  background-color: #fff;
+  background-color: #eee;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  color: #000; 
 }
