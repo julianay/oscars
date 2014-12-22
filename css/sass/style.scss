@@ -1,9 +1,17 @@
-body {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-weight: 200;
+$api:#ccc;
+$font-sans: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$weight-main:200;
+
+ @mixin font-style{
+  font-family: $font-sans;
+  font-weight:  $weight-main;
   -webkit-font-smoothing: antialiased;
-  font-size: 10px;
-  color: #fff;
+ }
+
+body {
+  @include font-style;
+  font-size: 10px; 
+  color: #fff; 
   background-color: #eee;
 }
 
@@ -12,12 +20,13 @@ body {
   fill: none;
   stroke: #666;
   shape-rendering: auto;
-  color: #000;
+  color: #000; 
+
 }
 
 .dot {
   stroke: #666;
-  color: #000;
+   color: #000; 
 }
 
 .tooltip {
@@ -28,10 +37,8 @@ body {
   color: #000;
 }
 
-div {
+div{
   background-color: #eee;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  color: #000;
+  color: #000; 
 }
-
-/*# sourceMappingURL=style.css.map */

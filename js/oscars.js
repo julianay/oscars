@@ -1,68 +1,71 @@
-console.log("hello js");
+//CONSTANTS
 var dotClicked = false;
 var screenWidth = 960
 var screenHeight = 500
 
+//MARGINS
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = screenWidth - margin.left - margin.right,
     height = screenHeight - margin.top - margin.bottom;
 
-/* 
- * value accessor - returns the value to encode for a given data object.
- * scale - maps value to a visual display encoding, such as a pixel position.
- * map function - maps from data value to display value
- * axis - sets up axis
- */ 
-var parseDate = d3.time.format("%Y").parse;
-//var formatYear = d3.time.format("%Y").parse;
-// setup x 
-var xValue = function(d) { return d.award_d;}, // data -> value
-    xScale = d3.time.scale().range([0, width]), // value -> display
-    xMap = function(d) { return xScale(xValue(d));}, // data -> display
-    xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
-// setup y
-var yValue = function(d) { return d.age_award;}, // data -> value
-    yScale = d3.scale.linear().range([height, 0]), // value -> display
-    yMap = function(d) { return yScale(yValue(d));}, // data -> display
-    yAxis = d3.svg.axis().scale(yScale).orient("left");
+//SCALES and AXIS
+var dataset = function(d) {return d};
+// x scale and axis
+var xScale = d3.time.scale().range([5, width]);
+//xScale.domain([d3.min(dataset, xValue)-1, d3.max(dataset, xValue)+1]);
+//domain set in data loop
+var xValue = function(d) { return d.award_d;}; //data -> value (get date value from data)
+var xMap = function(d) { return xScale(xValue(d));}; //data -> display (display data in correct scale)
+var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
-// setup fill color
-var cValue = function(d) { return d.type_award;},
-    color = d3.scale.category10();
+// y scale and axis
+var yScale = d3.scale.linear().range([height, 0]);
+//domain set in data loop
+var yValue = function(d) { return d.age_award;};
+var yMap = function(d) { return yScale(yValue(d));};
+var yAxis = d3.svg.axis().scale(yScale).orient("left");   
 
-// add the graph canvas to the body of the webpage
+//setup color ranges (color scale)
+var cValue = function(d){ return d.type_award};
+var color = d3.scale.category10(); //constructs ordinal scale with 10 categorical colors
+
+//ADD SVG AND G (group) to the body
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
+    //create group
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // add the tooltip area to the webpage
 var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
-    .style("opacity", 0);
+    .style("opacity", 0);   
 
-// load data
+// LOAD DATA
+//parse data for time format
+var parseDate = d3.time.format("%Y").parse;
+
 d3.csv("data/oscars.csv", function(error, data) {
-
-  // change string (from CSV) into number format
   data.forEach(function(d) {
+    //"+" returns numerical representation
     d.award_d = +parseDate(d.award_d);
     d.age_award = +d.age_award;
     var dateTest = new Date(d.award_d);
-    //console.log((new Date(d.award_d)).getFullYear());
   });
-
-  // don't want dots overlapping axis, so add in buffer to data domain
+ 
+  //don't want dots overlapping axis, so add in buffer to data domain
+  //need to set this here because I need to pass data array into min and max functions.
   xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
   yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
-	
-  // x-axis
-  svg.append("g")
+
+  //DRAW
+  //X AXIS 
+  svg.append("g") //adding group to contain and translate axis
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
+      .call(xAxis) //draw xAxis
     .append("text")
       .attr("class", "label")
       .attr("x", width)
@@ -70,8 +73,7 @@ d3.csv("data/oscars.csv", function(error, data) {
       .style("text-anchor", "end")
       .text("Award Year");
 
-
-  // y-axis
+  //Y AXIS
   svg.append("g")
       .attr("class", "y axis")
       .call(yAxis)
@@ -81,9 +83,9 @@ d3.csv("data/oscars.csv", function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Age at award (years)");
+      .text("Age at award");
 
-  // draw dots
+  // DRAW DOTS
   svg.selectAll(".dot")
       .data(data)
     .enter().append("circle")
@@ -111,30 +113,7 @@ d3.csv("data/oscars.csv", function(error, data) {
                lightDots(i); 
       });
 
-      /*
-      //for ipad: 
-      .on("click", function(d, i) {
-        if(dotClicked==false){
-          console.log("test " + dotClicked)
-          tooltip.transition()
-               .duration(200)
-               .style("opacity", .9);
-          tooltip.html("<div>" + d.name + "<br/>" + (new Date(d.award_d)).getFullYear() + ", age:" + yValue(d) + "<br/>" + d.film + "<div>" )
-               .style("left", (d3.event.pageX + 5) + "px")
-               .style("top", (d3.event.pageY - 28) + "px");
-          dimDots(i);   
-          dotClicked = true;
-        }else{
-            tooltip.transition()
-               .duration(500)
-               .style("opacity", 0);
-               lightDots(i); 
-               console.log("test " + dotClicked)
-               dotClicked = false;
-        }
-      });
-      */
-
+ 
   // draw legend
   var legend = svg.selectAll(".legend")
       .data(color.domain())
@@ -173,14 +152,18 @@ d3.csv("data/oscars.csv", function(error, data) {
 });
 
 function dimDots(i) {
-	var n = i+3; //nth starts at 1 booo
-	svg.selectAll("circle").style("opacity", 0.1);
-	svg.selectAll("circle:nth-child(" + n + ")").style("opacity", 1);
+  var n = i+3; //nth starts at 1 booo
+  svg.selectAll("circle").style("opacity", 0.1);
+  svg.selectAll("circle:nth-child(" + n + ")").style("opacity", 1);
 }
 
 function lightDots(i) {
-	var n = i+3; //nth starts at 3? weird booo
-	console.log(typeof(i));
-	svg.selectAll("circle").style("opacity", 1);
-	svg.selectAll("circle:nth-child(" + n + ")").style("opacity", 1);
+  var n = i+3; //nth starts at 3? weird booo
+  console.log(typeof(i));
+  svg.selectAll("circle").style("opacity", 1);
+  svg.selectAll("circle:nth-child(" + n + ")").style("opacity", 1);
 }
+
+    
+
+
