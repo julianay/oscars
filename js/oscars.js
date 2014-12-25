@@ -1,6 +1,6 @@
 //CONSTANTS
 var dotClicked = false;
-var screenWidth = 960
+var screenWidth = 920
 var screenHeight = 500
 
 //MARGINS
@@ -56,7 +56,7 @@ d3.csv("data/oscars.csv", function(error, data) {
   });
  
   //don't want dots overlapping axis, so add in buffer to data domain
-  //need to set this here because I need to pass data array into min and max functions.
+  //need to set domain here because I need to pass data array into min and max functions.
   xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
   yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
 
@@ -119,20 +119,15 @@ d3.csv("data/oscars.csv", function(error, data) {
       .data(color.domain())
     .enter().append("g")
       .attr("class", "legend")
-      //.attr("x", 10)
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; })
 
       .on("mouseover", function(d, i) {
         svg.selectAll("circle").style("opacity", 0.1);
-        //svg.selectAll("#best_actor").style("opacity", 1);
         svg.selectAll("#" + d).style("opacity", 1);
-        //svg.selectAll("#" + d).transition().attr("cy",0);
       })
       .on("mouseout", function(d, i) {
-        //console.log(d);
         svg.selectAll("circle").style("opacity", 1);
         console.log(xMap);
-        //svg.selectAll("#" + d).transition().attr("cy",0);
       });
 
   // draw legend colored rectangles
@@ -148,7 +143,32 @@ d3.csv("data/oscars.csv", function(error, data) {
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
-      .text(function(d) { return d;})
+      .text(function(d) { 
+        switch(d) {
+        case "best_actor":
+        d="Best Actor"
+        return d;
+        break;
+
+        case "best_actress":
+        d="Best Actress"
+        return d;
+        break;
+
+        case "sup_actor":
+        d="Supporting Actor"
+        return d;
+        break;
+
+        case "sup_actress":
+        d="Supporting Actress"
+        return d;
+        break;
+
+        default:
+        return d;
+        }
+      })
 });
 
 function dimDots(i) {
