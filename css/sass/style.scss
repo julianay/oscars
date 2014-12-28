@@ -1,4 +1,4 @@
-$primary:#000;
+$primary:#222;
 $screenBkg:#fff;
 $font-sans: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $weight-main:200;
@@ -17,7 +17,8 @@ body {
 }
 
 h1 {
-  @include font-style;
+  font-family: "HelveticaNeue-UltraLight", "Helvetica Neue Ultra Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight:200;
   font-size: 24px;
   color: #888;
   margin-top: 40px;
@@ -27,14 +28,14 @@ h1 {
 .axis path,
 .axis line {
   fill: none;
-  stroke: #666;
+  stroke: #aaa;
   shape-rendering: auto;
   color: $primary; 
 
 }
 
 .dot {
-  stroke: #666;
+  stroke: #aaa;
    color: $primary; 
 }
 
@@ -50,4 +51,12 @@ div{
   background-color: #eee;
   font-family: $font-sans;
   color: $primary; 
+}
+
+g.tick{
+  fill: #aaa; 
+}
+
+text.label{
+  fill: #aaa; 
 }

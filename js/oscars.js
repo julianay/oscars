@@ -5,7 +5,7 @@ var screenWidth = 920
 var screenHeight = 500
 
 //MARGINS
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
+var margin = {top: 30, right: 20, bottom: 30, left: 50},
     width = screenWidth - margin.left - margin.right,
     height = screenHeight - margin.top - margin.bottom;
 

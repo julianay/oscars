@@ -7,7 +7,7 @@ body {
 }
 
 h1 {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: "HelveticaNeue-UltraLight", "Helvetica Neue Ultra Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 200;
   font-size: 24px;
   color: #888;
@@ -18,14 +18,14 @@ h1 {
 .axis path,
 .axis line {
   fill: none;
-  stroke: #666;
+  stroke: #aaa;
   shape-rendering: auto;
-  color: #000;
+  color: #222;
 }
 
 .dot {
-  stroke: #666;
-  color: #000;
+  stroke: #aaa;
+  color: #222;
 }
 
 .tooltip {
@@ -33,13 +33,21 @@ h1 {
   width: 200px;
   height: 28px;
   pointer-events: none;
-  color: #000;
+  color: #222;
 }
 
 div {
   background-color: #eee;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  color: #000;
+  color: #222;
+}
+
+g.tick {
+  fill: #aaa;
+}
+
+text.label {
+  fill: #aaa;
 }
 
 /*# sourceMappingURL=style.css.map */
