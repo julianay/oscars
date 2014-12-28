@@ -1,5 +1,6 @@
 //CONSTANTS
 var dotClicked = false;
+var legendClicked = false;
 var screenWidth = 920
 var screenHeight = 500
 
@@ -119,15 +120,31 @@ d3.csv("data/oscars.csv", function(error, data) {
       .data(color.domain())
     .enter().append("g")
       .attr("class", "legend")
+      .attr("id", function(d) { return "leg_" + d;})
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; })
 
       .on("mouseover", function(d, i) {
-        svg.selectAll("circle").style("opacity", 0.1);
-        svg.selectAll("#" + d).style("opacity", 1);
+        if(legendClicked == false){
+          svg.selectAll("circle").style("opacity", 0.1);
+          svg.selectAll("#" + d).style("opacity", 1);
+        }  
       })
       .on("mouseout", function(d, i) {
-        svg.selectAll("circle").style("opacity", 1);
-        console.log(xMap);
+        if(legendClicked == false){
+          svg.selectAll("circle").style("opacity", 1);
+        }
+      })
+      .on("mousedown", function(d, i){
+        if(legendClicked == false){
+          svg.selectAll("#leg_" + d).style("opacity", 0.1);
+          svg.selectAll("circle").style("opacity", 0.1);
+          svg.selectAll("#" + d).style("opacity", 1);
+          legendClicked = true;
+        }else{
+          svg.selectAll("#leg_" + d).style("opacity", 1);
+          svg.selectAll("circle").style("opacity", 1);
+          legendClicked = false;
+        }
       });
 
   // draw legend colored rectangles

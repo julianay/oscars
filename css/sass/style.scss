@@ -16,6 +16,14 @@ body {
   background-color: #eee;
 }
 
+h1 {
+  @include font-style;
+  font-size: 24px;
+  color: #888;
+  margin-top: 40px;
+  margin-left: 30px;
+}
+
 .axis path,
 .axis line {
   fill: none;
