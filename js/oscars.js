@@ -14,7 +14,7 @@ var margin = {top: 30, right: 20, bottom: 30, left: 50},
 var dataset = function(d) {return d};
 // x scale and axis
 var xScale = d3.time.scale().range([5, width]);
-//xScale.domain([d3.min(dataset, xValue)-1, d3.max(dataset, xValue)+1]);
+
 //domain set in data loop
 var xValue = function(d) { return d.award_d;}; //data -> value (get date value from data)
 var xMap = function(d) { return xScale(xValue(d));}; //data -> display (display data in correct scale)
